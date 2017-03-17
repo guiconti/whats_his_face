@@ -2,68 +2,42 @@ var cv = require('opencv');
 
 try {
 
-    var webcam = new cv.VideoCapture(1);
-    var window = new cv.NamedWindow('Video', 0);
+    var webcam = new cv.VideoCapture(0);
+    //var window = new cv.NamedWindow('Video', 1);
 
-        cv.readImage('./gib4.jpg', function(err, image) {
+    setInterval(() => {
 
-            image.detectObject(cv.FACE_CASCADE, {}, function(err, faces) {
-
-                if (err) throw err;
-
-                for (var i=0; i<faces.length; i++){
-
-                    var x = faces[i]
-                    image.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
-
-                }
-            
-                image.save('./out.jpg');
-
-            });
-
-        });
-
-        /*webcam.read(function(err, webcamImage) {
+        webcam.read((err, webcamImage) => {
 
             if (err) throw err;
 
             if (webcamImage.size()[0] > 0 && webcamImage.size()[1] > 0){
 
-                console.log(webcamImage.size());
+                //console.log(webcamImage.size());
                 webcamImage.save('./teste.jpg');
 
-                window.show(webcamImage);
+                //window.show(webcamImage);
 
-                window.blockingWaitKey(0, 50);
+                webcamImage.detectObject(cv.FACE_CASCADE, {}, function(err, faces) {
 
-                /*
+                    if (err) throw err;
 
-                //window.show(im);
-                cv.readImage(webcamImage, function(err, image){
+                    for (var i=0; i<faces.length; i++){
 
-                    image.detectObject(cv.FACE_CASCADE, {}, function(err, faces) {
+                        var x = faces[i]
+                        webcamImage.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
 
-                        if (err) throw err;
-
-                        for (var i=0; i<faces.length; i++){
-
-                            var x = faces[i]
-                            image.ellipse(x.x + x.width/2, x.y + x.height/2, x.width/2, x.height/2);
-
-                        }
-                    
-                        image.save('./out.jpg');
-
-                    });
+                    }
+                
+                    webcamImage.save('./out.jpg');
 
                 });
-                
+
             }
 
-            //window.blockingWaitKey(0, 50);
+        });
 
-        });*/
+    }, 20);
 
 } catch (e){
 
