@@ -12,8 +12,8 @@ exports.normalPhoto = (req, res) => {
             if (webcamImage.size()[0] > 0 && webcamImage.size()[1] > 0){
 
                 //console.log(webcamImage.size());
-                webcamImage.save('./teste.jpg');
-                res.status(200).sendFile(process.cwd() + '/teste.jpg');
+                webcamImage.save('./image/room.jpg');
+                res.status(200).sendFile(process.cwd() + '/image/room.jpg');
 
                 //window.show(webcamImage);
 
